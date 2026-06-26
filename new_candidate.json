@@ -1,0 +1,43 @@
+{
+  "candidate_id": "CAND_NEW_TEST01",
+  "profile": {
+    "anonymized_name": "Test Candidate",
+    "headline": "Search Engineer",
+    "summary": "Search engineer with 6 years building retrieval and ranking systems for e-commerce search.",
+    "location": "Pune, Maharashtra",
+    "country": "India",
+    "years_of_experience": 6.0,
+    "current_title": "Search Engineer",
+    "current_company": "Acme Corp",
+    "current_company_size": "201-1000",
+    "current_industry": "E-commerce"
+  },
+  "skills": [
+    {"name": "RAG", "proficiency": "advanced", "endorsements": 12, "duration_months": 18},
+    {"name": "FAISS", "proficiency": "advanced", "endorsements": 10, "duration_months": 20},
+    {"name": "Python", "proficiency": "expert", "endorsements": 30, "duration_months": 70},
+    {"name": "Elasticsearch", "proficiency": "advanced", "endorsements": 15, "duration_months": 40},
+    {"name": "Learning to Rank", "proficiency": "advanced", "endorsements": 8, "duration_months": 24}
+  ],
+  "career_history": [
+    {"title": "Backend Engineer", "company": "Initech", "start_date": "2019-01-01", "duration_months": 24,
+     "description": "Built backend services and data pipelines for a logistics platform."},
+    {"title": "Search Engineer", "company": "Acme Corp", "start_date": "2021-01-01", "duration_months": 48,
+     "description": "Built and deployed a semantic search and ranking system serving 5M+ users in production, using elasticsearch and embedding-based retrieval. Ran A/B tests and offline-online correlation analysis to validate ranking model improvements."}
+  ],
+  "education": [
+    {"degree": "B.Tech", "field_of_study": "Computer Science", "end_year": 2018, "tier": "tier_2"}
+  ],
+  "redrob_signals": {
+    "last_active_date": "2026-06-10",
+    "recruiter_response_rate": 0.6,
+    "open_to_work_flag": true,
+    "willing_to_relocate": true,
+    "notice_period_days": 30,
+    "interview_completion_rate": 0.8,
+    "github_activity_score": 70,
+    "offer_acceptance_rate": 0.5,
+    "skill_assessment_scores": {},
+    "preferred_work_mode": "hybrid"
+  }
+}

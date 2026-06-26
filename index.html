@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPDR — Skill-Progression Diffusion Ranker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================== AMBIENT BACKGROUND ============================== -->
+<div class="bg-layer">
+  <canvas id="bg-particles"></canvas>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<!-- ============================== TOP NAV ============================== -->
+<nav class="topnav">
+  <div class="topnav-left">
+    <div class="logo-mark">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <circle cx="15" cy="15" r="13" stroke="url(#g1)" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="15" cy="15" r="8.5" stroke="url(#g1)" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="15" cy="15" r="3" fill="url(#g1)"/>
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="30" y2="30">
+          <stop offset="0" stop-color="#7C9DFF"/><stop offset="1" stop-color="#C49CFF"/>
+        </linearGradient></defs>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-title">SPDR</span>
+      <span class="logo-sub">Skill-Progression Diffusion Ranker</span>
+    </div>
+  </div>
+  <div class="topnav-center">
+    <button class="navtab active" data-view="overview">Overview</button>
+    <button class="navtab" data-view="leaderboard">Leaderboard</button>
+    <button class="navtab" data-view="candidate">Candidate Lab</button>
+    <button class="navtab" data-view="traps">Trap Detection</button>
+    <button class="navtab" data-view="copilot">Recruiter Copilot</button>
+  </div>
+  <div class="topnav-right">
+    <div class="role-chip">
+      <span class="dot-live"></span>
+      Senior AI Engineer · Founding Team
+    </div>
+  </div>
+</nav>
+
+<!-- ============================== VIEW: OVERVIEW ============================== -->
+<main id="view-overview" class="view active">
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">ROLE-CONDITIONED DIFFUSION RANKING ENGINE</div>
+      <h1>We don't rank who candidates <em>are</em>.<br>We simulate who they're <span class="grad-text">becoming</span>.</h1>
+      <p class="hero-sub">SPDR models every candidate as a skill trajectory through a 9-axis capability space,
+        then runs a role-conditioned stochastic simulation forward to project their fit after onboarding —
+        ranking by expected future alignment, not a keyword snapshot.</p>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-num" data-count="100000">0</div><div class="hstat-label">Candidates ingested</div></div>
+        <div class="hstat"><div class="hstat-num" data-count="92324">0</div><div class="hstat-label">Passed eligibility gate</div></div>
+        <div class="hstat"><div class="hstat-num" data-count="100">0</div><div class="hstat-label">Final ranked shortlist</div></div>
+        <div class="hstat"><div class="hstat-num" data-count="0">118s</div><div class="hstat-label">Wall-clock runtime / 300s budget</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="glass-panel orb-panel">
+        <div id="hero-diffusion-svg" class="hero-orb"></div>
+        <div class="orb-caption">Live SPDR simulation · 9-axis skill manifold</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trap-banner">
+    <div class="trap-banner-inner">
+      <div class="trap-banner-icon">⚠</div>
+      <div class="trap-banner-text">
+        <strong>The trap every naive system falls into:</strong> a pure keyword/embedding ranker scores
+        candidates by raw skill-tag overlap with the JD — which means it ranks an
+        <em>HR Manager who lists 9 AI buzzwords</em> above a real ML engineer. SPDR's eligibility gate
+        and title↔career-history corroboration check catch this. See it live in
+        <a href="javascript:void(0)" onclick="switchView('traps')">Trap Detection →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pipeline-section">
+    <div class="section-head">
+      <h2>How a candidate becomes a rank</h2>
+      <p>Five deterministic, auditable stages — every number traceable back to the job description and the candidate's own record.</p>
+    </div>
+    <div class="pipeline-rail" id="pipeline-rail">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <section class="axis-section">
+    <div class="section-head">
+      <h2>The 9-axis skill manifold</h2>
+      <p>Every candidate — and the role itself — lives as a point in this space. Not raw skill tags: named, interpretable capability clusters.</p>
+    </div>
+    <div class="axis-grid" id="axis-grid"><!-- populated by JS --></div>
+  </section>
+
+  <section class="population-section">
+    <div class="section-head">
+      <h2>Population at a glance</h2>
+      <p>92,324 of 100,000 candidates passed the eligibility gate. Here's where the whole pool — and the final 100 — actually sit.</p>
+    </div>
+    <div class="population-grid">
+      <div class="glass-panel chart-panel">
+        <div class="panel-title">Current Fit vs. SPDR Future Fit (6-month horizon)</div>
+        <div id="scatter-chart" class="chart-host"></div>
+      </div>
+      <div class="glass-panel chart-panel">
+        <div class="panel-title">Why candidates got filtered out</div>
+        <div id="funnel-chart" class="chart-host"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================== VIEW: LEADERBOARD ============================== -->
+<main id="view-leaderboard" class="view">
+  <section class="leaderboard-section">
+    <div class="section-head row-head">
+      <div>
+        <h2>Final Shortlist — Top 100</h2>
+        <p>Ranked by composite score. Click any row to open the Candidate Lab.</p>
+      </div>
+      <div class="lb-controls">
+        <input id="lb-search" class="lb-search" type="text" placeholder="Search name, title, company…">
+        <select id="lb-sort" class="lb-select">
+          <option value="rank">Sort: Rank</option>
+          <option value="current_fit">Sort: Current Fit</option>
+          <option value="future_fit">Sort: Future Fit</option>
+          <option value="growth">Sort: Growth Potential</option>
+        </select>
+      </div>
+    </div>
+    <div class="glass-panel lb-table-panel">
+      <div class="lb-table-head">
+        <div class="lb-col lb-col-rank">#</div>
+        <div class="lb-col lb-col-name">Candidate</div>
+        <div class="lb-col lb-col-loc">Location</div>
+        <div class="lb-col lb-col-bar">Current → Future Fit</div>
+        <div class="lb-col lb-col-score">Score</div>
+      </div>
+      <div id="lb-rows" class="lb-rows"><!-- populated by JS --></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================== VIEW: CANDIDATE LAB ============================== -->
+<main id="view-candidate" class="view">
+  <section class="candidate-section" id="candidate-section">
+    <div class="cl-empty" id="cl-empty">
+      <div class="cl-empty-icon">◎</div>
+      <div>Select a candidate from the <a href="javascript:void(0)" onclick="switchView('leaderboard')">Leaderboard</a> to open their diffusion profile.</div>
+    </div>
+    <div class="cl-content" id="cl-content" style="display:none;">
+      <!-- populated by JS -->
+    </div>
+  </section>
+</main>
+
+<!-- ============================== VIEW: TRAP DETECTION ============================== -->
+<main id="view-traps" class="view">
+  <section class="traps-section">
+    <div class="section-head">
+      <h2>Trap Detection &amp; Adversarial Robustness</h2>
+      <p>This dataset was deliberately seeded with failure modes. Here's what they look like, and proof SPDR doesn't fall for them.</p>
+    </div>
+    <div class="traps-grid" id="traps-grid"><!-- populated by JS --></div>
+  </section>
+</main>
+
+<!-- ============================== VIEW: RECRUITER COPILOT ============================== -->
+<main id="view-copilot" class="view">
+  <section class="copilot-section">
+    <div class="section-head">
+      <h2>Recruiter Copilot</h2>
+      <p>Ask plain-language questions about the shortlist. Answers are computed live from the ranking data — no hallucination, every number traceable.</p>
+    </div>
+    <div class="copilot-layout">
+      <div class="glass-panel copilot-chat">
+        <div id="copilot-messages" class="copilot-messages"></div>
+        <div class="copilot-suggestions" id="copilot-suggestions"></div>
+        <div class="copilot-input-row">
+          <input id="copilot-input" type="text" placeholder="e.g. Who has the strongest growth potential in Pune?">
+          <button id="copilot-send">Ask</button>
+        </div>
+      </div>
+      <div class="glass-panel copilot-side">
+        <div class="panel-title">Quick filters</div>
+        <div id="copilot-quickfilters" class="copilot-quickfilters"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================== CANDIDATE DRILL-DOWN MODAL (overlay) ============================== -->
+<div id="candidate-modal-backdrop" class="modal-backdrop">
+  <div class="modal-shell glass-panel" id="candidate-modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="dashboard_data.js"></script>
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
